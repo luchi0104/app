@@ -23,18 +23,28 @@ class _RegisterPageState extends State<RegisterPage> {
           children: <Widget>[
             TextField(
               controller: _emailController,
+              decoration: InputDecoration(labelText: '姓名'),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: _usernameController,
               decoration: InputDecoration(labelText: 'e-mail'),
             ),
             SizedBox(height: 20),
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: '帳號'),
+              decoration: InputDecoration(labelText: '電話'),
             ),
             SizedBox(height: 20),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: '密碼'),
+              decoration: InputDecoration(labelText: '帳號'),
               obscureText: true,
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(labelText: '密碼'),
             ),
             SizedBox(height: 20),
             ElevatedButton(

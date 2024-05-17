@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/AI_Wound_analysis.dart';
 import 'pages/Historical_data_analysis.dart';
-import 'pages/patient_information.dart';
 import 'pages/personal_information.dart';
 import 'pages/Login_page.dart';
 
@@ -30,20 +29,19 @@ class BottomNavigationController extends StatefulWidget {
 class _BottomNavigationControllerState
     extends State<BottomNavigationController> {
   int _currentIndex = 0;
-  final pages = [Historical_data(), AI_Wound_analysis(), patient_information(),personal_information()];
+  final pages = [Historical_data(), AI_Wound_analysis(),personal_information()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('頁面切換'),
+        title: Text('褥瘡分析系統'),
       ),
       body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.history), label: '歷史資料分析'),
           BottomNavigationBarItem(icon: Icon(Icons.camera), label: 'AI 傷口分析'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: '病患資料'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: '個人資料',),
         ],
         currentIndex: _currentIndex,

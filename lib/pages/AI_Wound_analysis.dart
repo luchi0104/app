@@ -1,25 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 
-class AI_Wound_analysis extends StatelessWidget {
+class AI_Wound_analysis extends StatefulWidget {
+  @override
+  _AI_Wound_analysisState createState() => _AI_Wound_analysisState();
+}
+
+class _AI_Wound_analysisState extends State<AI_Wound_analysis> {
+  late List<CameraDescription> _cameras;
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    _cameras = await availableCameras();
+    _controller = CameraController(_cameras[0], ResolutionPreset.high);
+    _initializeControllerFuture = _controller.initialize();
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("AI傷口分析"),
       ),
-      body: Center(
-        child: Container(
-          width: 300,
-          height: 500,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            border: Border.all(color: Colors.black),
-          ),
-          child: Center(
-            child: Text("相機預覽區域", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          ),
-        ),
-      ),
+      body: _initializeControllerFuture == null
+          ? Center(child: CircularProgressIndicator())
+          : FutureBuilder<void>(
+              future: _initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+                    child: Container(
+                      width: 400,
+                      height: 550, // 设置相机预览画面的大小
+                      child: CameraPreview(_controller),
+                    ),
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _buildFloatingActionButton(),
     );
@@ -34,7 +70,15 @@ class AI_Wound_analysis extends StatelessWidget {
           child: Icon(Icons.flash_on),
         ),
         FloatingActionButton(
-          onPressed: () => print('Take Picture'),
+          onPressed: () async {
+            try {
+              await _initializeControllerFuture;
+              final image = await _controller.takePicture();
+              print('Picture taken: ${image.path}');
+            } catch (e) {
+              print(e);
+            }
+          },
           heroTag: 'btn1',
           child: Icon(Icons.camera_alt),
         ),
