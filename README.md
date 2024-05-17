@@ -1,6 +1,6 @@
 # developmentapp
 
-.dart_tool、.idea、build因為太大傳不上去，但內容應該沒改到所以應該沒差(哈)
+A new Flutter project.
 
 ## Getting Started
 
