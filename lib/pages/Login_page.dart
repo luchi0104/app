@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: () {
                 // 登入驗證邏輯
-                if (_usernameController.text == 'user' && _passwordController.text == 'password') {
+                if ((_usernameController.text == 'user' || _usernameController.text =='S10000@gm.ncue.edu.tw') && _passwordController.text == 'password') {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigationController()));
                 } else {
                   // 处理错误
